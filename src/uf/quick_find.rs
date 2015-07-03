@@ -7,28 +7,33 @@ pub struct QuickFind {
 
 impl QuickFind {
     pub fn new(n : usize) -> QuickFind {
-        QuickFind { id : (0..n).collect(), count: n}
+        QuickFind {
+            id : (0..n).collect(),
+            count: n
+        }
     }
 }
 
 impl UF for QuickFind {
+    fn find(&self, p:usize) -> usize {
+        self.id[p]
+    }
+
     fn union (&mut self, p:usize, q: usize) {
         let pid = self.find(p);
         let qid = self.find(q);
 
-        if pid != qid {
-            for i in 0..self.id.len() {
-                if self.id[i] == pid {
-                    self.id[i] = qid;
-                }
-            }
-
-            self.count -= 1;
+        if pid == qid {
+            return;
         }
-    }
 
-    fn find(&self, p:usize) -> usize {
-        self.id[p]
+        for i in 0..self.id.len() {
+            if self.id[i] == pid {
+                self.id[i] = qid;
+            }
+        }
+
+        self.count -= 1;
     }
 
     fn count(&self) -> usize {
@@ -38,22 +43,22 @@ impl UF for QuickFind {
 
 #[test]
 fn test_tiny() {
-    let mut qf = QuickFind::new(10);
+    let mut uf = QuickFind::new(10);
 
-    qf.union(4,3);
-    qf.union(3,8);
-    qf.union(6,5);
-    qf.union(9,4);
-    qf.union(2,1);
+    uf.union(4,3);
+    uf.union(3,8);
+    uf.union(6,5);
+    uf.union(9,4);
+    uf.union(2,1);
 
-    assert!(qf.connected(8,9));
+    assert!(uf.connected(8,9));
 
-    qf.union(5,0);
-    qf.union(7,2);
-    qf.union(6,1);
+    uf.union(5,0);
+    uf.union(7,2);
+    uf.union(6,1);
 
-    assert!(qf.connected(1,0));
-    assert!(qf.connected(6,7));
+    assert!(uf.connected(1,0));
+    assert!(uf.connected(6,7));
 
-    assert_eq!(2, qf.count());
+    assert_eq!(2, uf.count());
 }
