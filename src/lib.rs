@@ -1,1 +1,1 @@
-pub mod uf;
+pub mod union_find;
