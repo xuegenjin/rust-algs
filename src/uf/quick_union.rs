@@ -1,4 +1,4 @@
-use super::uf::UF;
+use super::union_find::UF;
 
 pub struct QuickUnion {
     id: Vec<usize>,
@@ -13,7 +13,20 @@ impl QuickUnion {
         }
     }
 
-    impl_path_methods!();
+    fn path_length(&self, i: usize, length: usize) -> usize {
+        if i == self.id[i] {
+            length
+        } else {
+            self.path_length(self.id[i], length + 1)
+        }
+    }
+
+    fn max_path_length(&self) -> usize {
+        (0..self.id.len())
+            .map (|i| self.path_length(i, 0))
+            .max()
+            .unwrap()
+    }
 }
 
 impl UF for QuickUnion {
