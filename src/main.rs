@@ -1,8 +1,6 @@
 extern crate algs4;
 
-use algs4::union_find::UF;
-use algs4::union_find::QuickFind;
-use algs4::union_find::QuickUnion;
+use algs4::union_find::{UF, QuickFind, QuickUnion};
 
 fn main() {
     let mut qf = QuickFind::new(10);
