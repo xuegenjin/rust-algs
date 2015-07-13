@@ -2,6 +2,7 @@ extern crate algs4;
 
 use algs4::union_find::{UF, QuickFind, QuickUnion, WeightedQuickUnion};
 //use algs4::percolation::PercolationStats;
+use algs4::sorting::*;
 
 use std::env;
 
@@ -18,12 +19,7 @@ fn main() {
     wqu.union(4,3);
     assert!(wqu.connected(4,3));
 
-    /*if env::args().count() > 2 {
-        let args = env::args().skip(1).take(2).map(|s| s.parse::<usize>().unwrap()).collect::<Vec<_>>();
-        let ps = PercolationStats::new(args[0], args[1]);
-
-        println!("mean                    = {}", ps.mean());
-        println!("stddev                  = {}", ps.stddev());
-        println!("95% confidence interval = {}, {}" , ps.confidence_lo(), ps.confidence_hi());
-    }*/
+    let mut v = vec![5, 4, 3, 2, 1];
+    selection_sort(&mut v);
+    println!("{:?}", v);
 }
